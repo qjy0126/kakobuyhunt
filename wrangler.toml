@@ -1,6 +1,7 @@
 name = "kakobuyhunt"
 compatibility_date = "2026-09-20"
 
+# Static site for kakobuyhunt.com — GitHub repo: qjy0126/kakobuyhunt
 [assets]
 directory = "."
 not_found_handling = "none"
