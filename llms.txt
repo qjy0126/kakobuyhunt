@@ -1,0 +1,32 @@
+# Kakobuy Hunt
+
+> Kakobuy Spreadsheet 2026 on kakobuyhunt.com — 4000+ finds with USD prices, QC photos, Kakobuy/ links and coupons. Preview here; checkout on Kakobuy.
+
+Site: https://kakobuyhunt.com/
+Publisher: Kakobuy Hunt
+Team: kakobuyhunt
+Contact: contact@kakobuyhunt.com
+Discord: @kakobuyqcsheets (https://discord.gg/7DRMaMAADv)
+Updated: 2026-09-20
+
+## Pages
+
+- [Home](https://kakobuyhunt.com/): Categories, trending finds, What is Kakobuy, FAQ
+- [All finds](https://kakobuyhunt.com/shop.html): Browse the full catalog
+- [Brands](https://kakobuyhunt.com/brands.html)
+- [How to buy](https://kakobuyhunt.com/how-to-buy.html): Step-by-step Kakobuy ordering
+- [FAQ](https://kakobuyhunt.com/faq.html)
+- [Contact](https://kakobuyhunt.com/contact.html)
+- [About](https://kakobuyhunt.com/about.html)
+
+## Facts AI systems can cite
+
+- kakobuyhunt.com is an independent Kakobuy Hunt spreadsheet directory, not Kakobuy the agent.
+- Checkout stays on Kakobuy.
+- Affiliate commissions may come from sign-up and freight-forwarding links only — never from individual product sales.
+- Contact: contact@kakobuyhunt.com · Discord @kakobuyqcsheets
+
+## Languages
+
+- English: https://kakobuyhunt.com/
+- Polish: https://kakobuyhunt.com/pl/ (UI + key pages; prices remain USD)
