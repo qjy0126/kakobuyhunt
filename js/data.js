@@ -17,7 +17,7 @@ KF.asset = (path) => {
  const s = String(path || "");
  if (!s || /^https?:\/\//i.test(s)) return s;
  const clean = s.replace(/^\.\//, "").replace(/^\//, "");
- return (KF.root || "") + clean;
+ return "/" + clean;
 };
 
 KF.slugify = (text) => String(text || "")
