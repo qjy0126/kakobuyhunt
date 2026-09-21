@@ -1,11 +1,12 @@
 (function () {
  const $ = (sel, root = document) => root.querySelector(sel);
  const t = (k) => (typeof KF.t === "function" ? KF.t(k) : k);
- const root = () => KF.root || "";
+ const homeHref = () => (KF.lang === "pl" ? "/pl/" : "/");
+ const pageHref = (file) => (file === "brands.html" ? "/brands/" : (KF.lang === "pl" ? "/pl/" : "/") + file);
 
  function brandLink() {
  return `
- <a class="brand" href="index.html">
+ <a class="brand" href="${homeHref()}">
  <span class="brand-copy">
  <strong>kakobuy <span>Spreadsheet</span></strong>
  </span>
@@ -39,13 +40,13 @@
  <div class="overlay" id="overlay"></div>
  <aside class="mobile-nav" id="mobile-nav">
  <input class="search-input-mobile" id="mobile-search" placeholder="${t("searchPlaceholder")}" />
- <a href="index.html">${t("home")}</a>
+ <a href="${homeHref()}">${t("home")}</a>
  <a href="${KF.findsPath()}">${t("allFinds")}</a>
  ${KF.categories.map((c) => `<a href="${KF.catPath(c.slug)}">${catLabel(c)}</a>`).join("")}
- <a href="how-to-buy.html">${t("howToBuy")}</a>
- <a href="faq.html">${t("faq")}</a>
- <a href="about.html">${t("about")}</a>
- <a href="contact.html">${t("contact")}</a>
+ <a href="${pageHref("how-to-buy.html")}">${t("howToBuy")}</a>
+ <a href="${pageHref("faq.html")}">${t("faq")}</a>
+ <a href="${pageHref("about.html")}">${t("about")}</a>
+ <a href="${pageHref("contact.html")}">${t("contact")}</a>
  ${typeof KF.langSwitch === "function" ? KF.langSwitch() : ""}
  <a href="${KF.site.signup}" target="_blank" rel="noopener">${t("signup")}</a>
  </aside>
@@ -73,13 +74,13 @@
  </div>
  <div class="footer-col">
  <h3>${t("quickLinks")}</h3>
- <a href="index.html">${t("home")}</a>
+ <a href="${homeHref()}">${t("home")}</a>
  <a href="${KF.findsPath()}">${t("allFinds")}</a>
- <a href="brands.html">${t("brands")}</a>
- <a href="how-to-buy.html">${t("howToBuy")}</a>
- <a href="faq.html">${t("faq")}</a>
- <a href="about.html">${t("about")}</a>
- <a href="contact.html">${t("contact")}</a>
+ <a href="${pageHref("brands.html")}">${t("brands")}</a>
+ <a href="${pageHref("how-to-buy.html")}">${t("howToBuy")}</a>
+ <a href="${pageHref("faq.html")}">${t("faq")}</a>
+ <a href="${pageHref("about.html")}">${t("about")}</a>
+ <a href="${pageHref("contact.html")}">${t("contact")}</a>
  </div>
  </div>
  <div class="legal">
