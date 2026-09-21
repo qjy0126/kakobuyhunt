@@ -23,7 +23,8 @@ ASSETS = """  <link rel="icon" href="/img/favicon.png" type="image/png" sizes="3
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/style.css" />"""
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/js/analytics.js"></script>"""
 
 SCRIPTS = """  <script src="/js/i18n.js"></script>
   <script src="/js/data.js"></script>

@@ -1,0 +1,30 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "scripts/**",
+      "**/.DS_Store",
+      "img/FireShot*",
+      "img/image.png",
+      "img/fdfedc5de427d3fe*.png",
+      "img/favicon-source.png",
+      "README.md",
+      "wrangler.toml"
+    ],
+    "headers": [
+      {
+        "source": "/sitemap*.xml",
+        "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }]
+      },
+      {
+        "source": "/sitemaps/**",
+        "headers": [{ "key": "Content-Type", "value": "application/xml; charset=utf-8" }]
+      }
+    ],
+    "cleanUrls": false,
+    "trailingSlash": true
+  }
+}
