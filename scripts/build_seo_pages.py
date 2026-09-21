@@ -429,35 +429,23 @@ def main() -> None:
     page_urls += [(abs_url(f"/{slug}/"), TODAY, "daily") for slug in active_cats]
     page_urls += [(abs_url(f"/brands/{slugify(name)}/"), TODAY, "weekly") for name, _ in brand_names]
     product_urls = [(abs_url(f"/item/{slug}/"), TODAY, "weekly") for slug in slugs.values()]
+    all_urls = page_urls + product_urls
+
+    # One flat sitemap — GSC often fails child fetches under /sitemaps/ on Workers.
+    write(ROOT / "sitemap.xml", sitemap_xml(all_urls))
     write(ROOT / "sitemap-pages.xml", sitemap_xml(page_urls))
 
-    chunk_size = 200
     sm_dir = ROOT / "sitemaps"
     if sm_dir.exists():
         shutil.rmtree(sm_dir)
-    sm_dir.mkdir()
-    product_sitemaps = []
-    for i in range(0, len(product_urls), chunk_size):
-        n = i // chunk_size + 1
-        name = f"{n:02d}.xml"
-        write(sm_dir / name, sitemap_xml(product_urls[i : i + chunk_size]))
-        product_sitemaps.append("sitemaps/" + name)
+    for stale in ("sitemap-index.xml",):
+        p = ROOT / stale
+        if p.exists():
+            p.unlink()
 
-    index_body = "\n".join(
-        f"  <sitemap><loc>{abs_url('/' + name)}</loc><lastmod>{TODAY}</lastmod></sitemap>"
-        for name in ["sitemap-pages.xml", *product_sitemaps]
-    )
-    index_xml = (
-        '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + index_body
-        + "\n</sitemapindex>\n"
-    )
-    write(ROOT / "sitemap-index.xml", index_xml)
-    write(ROOT / "sitemap.xml", index_xml)
     print(
         f"wrote {len(products)} item pages, {len(active_cats)} categories, "
-        f"{len(brand_names)} brands, {len(product_urls)} product URLs in {len(product_sitemaps)} sitemaps"
+        f"{len(brand_names)} brands, {len(all_urls)} URLs in sitemap.xml"
     )
 
 
