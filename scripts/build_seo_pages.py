@@ -265,6 +265,24 @@ def item_page(p: dict, related: list[dict]) -> str:
           <a class="btn btn-solid" id="buy-link" href="{escape(buy)}" target="_blank" rel="noopener">View on Kakobuy →</a>
           <a class="btn btn-ghost" href="/finds/">Back to catalog</a>
         </div>
+        <aside class="promo item-promo">
+          <div class="promo-copy">
+            <div class="promo-kicker">For New Kakobuy Users</div>
+            <h3>20% off shipping</h3>
+            <a class="btn btn-white" href="https://www.kakobuy.com/register?affcode={AFF}" target="_blank" rel="noopener">Claim now →</a>
+          </div>
+          <div class="coupon-stack">
+            <div class="coupon mini">¥100 OFF</div>
+            <div class="coupon main">
+              <b>20% OFF</b>
+              <p>20% off shipping using code “FANDS20”</p>
+              <div class="coupon-row">
+                <span>Valid 1 year</span>
+                <a class="btn btn-solid" href="https://www.kakobuy.com/register?affcode={AFF}" target="_blank" rel="noopener">Use Now</a>
+              </div>
+            </div>
+          </div>
+        </aside>
         <p class="note">{escape(desc)}</p>
       </div>
     </div>

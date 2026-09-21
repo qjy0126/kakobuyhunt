@@ -181,6 +181,7 @@
  }
 
  $("#buy-link").href = KF.kakobuyUrl(item.sourceUrl);
+ ensureItemPromo();
  fill("crumbs", `
  <a href="/">Home</a><span>/</span>
  <a href="${KF.findsPath()}">All finds</a><span>/</span>
@@ -227,6 +228,35 @@
  items: KF.gaItem(item),
  });
  });
+ }
+
+ function ensureItemPromo() {
+  if (document.querySelector(".item-promo")) return;
+  const note = document.querySelector(".item-copy .note");
+  const actions = document.querySelector(".item-actions");
+  if (!note && !actions) return;
+  const signup = KF.site.signup;
+  const html = `
+ <aside class="promo item-promo">
+ <div class="promo-copy">
+ <div class="promo-kicker">For New Kakobuy Users</div>
+ <h3>20% off shipping</h3>
+ <a class="btn btn-white" href="${signup}" target="_blank" rel="noopener">Claim now →</a>
+ </div>
+ <div class="coupon-stack">
+ <div class="coupon mini">¥100 OFF</div>
+ <div class="coupon main">
+ <b>20% OFF</b>
+ <p>20% off shipping using code “FANDS20”</p>
+ <div class="coupon-row">
+ <span>Valid 1 year</span>
+ <a class="btn btn-solid" href="${signup}" target="_blank" rel="noopener">Use Now</a>
+ </div>
+ </div>
+ </div>
+ </aside>`;
+  if (note) note.insertAdjacentHTML("beforebegin", html);
+  else actions.insertAdjacentHTML("afterend", html);
  }
 
  function renderFaq() {
