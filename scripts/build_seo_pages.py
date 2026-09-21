@@ -223,7 +223,6 @@ def item_page(p: dict, related: list[dict]) -> str:
         f"listed at ${price:.2f}. Preview photos here, then open Kakobuy to order."
     )
     buy = kakobuy_url(str(p.get("sourceUrl") or ""))
-    qc = "QC photos available" if p.get("qc") else "Review warehouse QC on Kakobuy before shipping"
     ld = {
         "@context": "https://schema.org",
         "@type": "Product",
@@ -260,7 +259,6 @@ def item_page(p: dict, related: list[dict]) -> str:
       <div class="item-copy">
         <h1 id="item-title">{escape(p.get("title") or "")}</h1>
         <div class="price" id="item-price">${price:.2f}</div>
-        <p class="meta">{escape(qc)} · {escape(brand)}</p>
         <div class="item-actions">
           <a class="btn btn-solid" id="buy-link" href="{escape(buy)}" target="_blank" rel="noopener">View on Kakobuy →</a>
           <a class="btn btn-ghost" href="/finds/">Back to catalog</a>

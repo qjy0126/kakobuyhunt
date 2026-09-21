@@ -919,7 +919,7 @@ button { cursor: pointer; }
 .item-thumbs:empty { display: none; }
 .item-copy h1 { margin: 0 0 6px; font-size: 1.65rem; letter-spacing: -0.04em; line-height: 1.15; }
 .item-copy .price { font-size: 24px; font-weight: 800; letter-spacing: -0.04em; }
-.meta { color: var(--muted); margin: 8px 0 18px; }
+.item-copy .meta { display: none; }
 .item-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0 10px; }
 .item-copy .note {
   background: var(--bg-warm);
