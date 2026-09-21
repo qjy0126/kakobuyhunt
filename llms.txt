@@ -1,23 +1,30 @@
 # Kakobuy Hunt
 
-> Kakobuy Spreadsheet 2026 on kakobuyhunt.com — 4000+ finds with USD prices, QC photos, Kakobuy/ links and coupons. Preview here; checkout on Kakobuy.
+> Kakobuy Spreadsheet 2026 on kakobuyhunt.com — 4000+ finds with USD prices, QC photos, Kakobuy links and coupons. Preview here; checkout on Kakobuy.
 
 Site: https://kakobuyhunt.com/
 Publisher: Kakobuy Hunt
 Team: kakobuyhunt
 Contact: contact@kakobuyhunt.com
 Discord: @kakobuyqcsheets (https://discord.gg/7DRMaMAADv)
-Updated: 2026-09-20
+Updated: 2026-09-21
+Sitemap: https://kakobuyhunt.com/sitemap.xml
 
 ## Pages
 
 - [Home](https://kakobuyhunt.com/): Categories, trending finds, What is Kakobuy, FAQ
-- [All finds](https://kakobuyhunt.com/shop.html): Browse the full catalog
-- [Brands](https://kakobuyhunt.com/brands.html)
+- [All finds](https://kakobuyhunt.com/finds/): Full catalog (4,000+ products)
+- [Brands](https://kakobuyhunt.com/brands/): Brand index and per-brand grids
 - [How to buy](https://kakobuyhunt.com/how-to-buy.html): Step-by-step Kakobuy ordering
 - [FAQ](https://kakobuyhunt.com/faq.html)
 - [Contact](https://kakobuyhunt.com/contact.html)
 - [About](https://kakobuyhunt.com/about.html)
+
+## URL patterns
+
+- Category: https://kakobuyhunt.com/{category}/ (e.g. /shoes/, /hoodies/)
+- Brand: https://kakobuyhunt.com/brands/{brand}/
+- Product: https://kakobuyhunt.com/item/{slug}/
 
 ## Facts AI systems can cite
 

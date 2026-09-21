@@ -51,7 +51,7 @@
 
  function renderShop() {
  const cat = document.body.dataset.cat || params.get("cat") || "";
- const brandSlug = params.get("brand") || "";
+ const brandSlug = document.body.dataset.brand || params.get("brand") || "";
  const q = (params.get("q") || "").toLowerCase();
  const sort = params.get("sort") || "latest";
  const pageSize = 48;
@@ -79,15 +79,18 @@
  const slice = list.slice(start, start + pageSize);
  fill("shop-count", total ? `Showing ${start + 1}–${start + slice.length} of ${total}` : "No products found");
  fill("product-grid", slice.map(KF.ui.productCard).join("") || "<p>No finds in this filter.</p>");
- fill("pager", pagerHtml(safePage, pages, { cat, brand: brandSlug, q: params.get("q"), sort: sort === "latest" ? "" : sort }));
+ const extras = { q: params.get("q"), sort: sort === "latest" ? "" : sort };
+ if (!document.body.dataset.cat && cat) extras.cat = cat;
+ if (!document.body.dataset.brand && brandSlug) extras.brand = brandSlug;
+ fill("pager", pagerHtml(safePage, pages, extras));
 
  const sortBox = $("#sort");
  if (sortBox) {
  sortBox.value = sort;
  sortBox.addEventListener("change", () => {
  const next = new URL(location.pathname, location.href);
- if (cat) next.searchParams.set("cat", cat);
- if (brandSlug) next.searchParams.set("brand", brandSlug);
+ if (!document.body.dataset.cat && cat) next.searchParams.set("cat", cat);
+ if (!document.body.dataset.brand && brandSlug) next.searchParams.set("brand", brandSlug);
  if (q) next.searchParams.set("q", params.get("q"));
  if (sortBox.value !== "latest") next.searchParams.set("sort", sortBox.value);
  location.href = next.pathname + next.search;
@@ -95,9 +98,22 @@
  }
  }
 
+ function resolveItem() {
+ const byAttr = document.body.dataset.itemId;
+ if (byAttr) return KF.products.find((p) => p.id === byAttr);
+ const byQuery = params.get("id");
+ if (byQuery) return KF.products.find((p) => p.id === byQuery);
+ const m = location.pathname.match(/\/item\/([^/]+)\/?$/);
+ if (!m) return null;
+ const slug = decodeURIComponent(m[1]);
+ const map = window.KF_SLUGS || {};
+ const id = Object.keys(map).find((k) => map[k] === slug);
+ if (id) return KF.products.find((p) => p.id === id);
+ return KF.products.find((p) => KF.itemSlug(p) === slug);
+ }
+
  function renderItem() {
- const wanted = params.get("id");
- const item = KF.products.find((p) => p.id === wanted);
+ const item = resolveItem();
  if (!item) {
  location.replace(KF.findsPath());
  return;
@@ -166,7 +182,7 @@
 
  $("#buy-link").href = KF.kakobuyUrl(item.sourceUrl);
  fill("crumbs", `
- <a href="index.html">Home</a><span>/</span>
+ <a href="/">Home</a><span>/</span>
  <a href="${KF.findsPath()}">All finds</a><span>/</span>
  <a href="${KF.catPath(item.category)}">${KF.catLabel(item.category)}</a><span>/</span>
  <span>${KF.ui.escapeHtml(item.title)}</span>
@@ -221,15 +237,67 @@
  }
 
  function renderBrands() {
+ const cloud = document.getElementById("brand-cloud");
+ if (cloud && cloud.children.length) return;
  const names = {};
  KF.products.forEach((p) => {
  const n = String(p.collection || "").trim();
- if (n) names[n] = true;
+ if (n && !/^find$/i.test(n)) names[n] = (names[n] || 0) + 1;
  });
- const list = Object.keys(names).sort((a, b) => a.localeCompare(b));
- fill("brand-cloud", list.map((n) => `<a href="${KF.brandPath(n)}">${KF.ui.escapeHtml(n)}</a>`).join(""));
+ const list = Object.entries(names)
+  .filter(([, n]) => n >= 5)
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+ fill("brand-cloud", list.map(([n, c]) => `<a class="brand-vault-card" href="${KF.brandPath(n)}"><strong>${KF.ui.escapeHtml(n)}</strong><span>${c} finds</span></a>`).join(""));
  }
 
+ function knownCats() {
+  const s = new Set(KF.categories.map((c) => c.slug));
+  KF.products.forEach((p) => {
+    if (p.category) s.add(p.category);
+    (p.categories || []).forEach((c) => s.add(c));
+  });
+  return s;
+ }
+
+ function redirectLegacy() {
+  const path = location.pathname;
+  const cats = knownCats();
+  if (/\/item\.html$/i.test(path)) {
+   const id = params.get("id");
+   const item = id && KF.products.find((p) => p.id === id);
+   location.replace(item ? KF.itemPath(item) : KF.findsPath());
+   return true;
+  }
+  if (/\/shop\.html$/i.test(path)) {
+   const cat = params.get("cat");
+   const brand = params.get("brand");
+   const next = new URLSearchParams(params);
+   next.delete("cat");
+   next.delete("brand");
+   let dest = KF.findsPath();
+   if (cat && cats.has(cat)) dest = KF.catPath(cat);
+   else if (brand) dest = "/brands/" + encodeURIComponent(brand) + "/";
+   const qs = next.toString();
+   location.replace(dest + (qs ? "?" + qs : ""));
+   return true;
+  }
+  if (/\/brands\.html$/i.test(path)) {
+   location.replace("/brands/");
+   return true;
+  }
+  if ((path === "/finds/" || path === "/finds") && params.get("cat")) {
+   const cat = params.get("cat");
+   if (!cats.has(cat)) return false;
+   const next = new URLSearchParams(params);
+   next.delete("cat");
+   const qs = next.toString();
+   location.replace(KF.catPath(cat) + (qs ? "?" + qs : ""));
+   return true;
+  }
+  return false;
+ }
+
+ if (redirectLegacy()) return;
  const page = document.body.dataset.page;
  if (page === "home") renderHome();
  if (page === "shop") renderShop();

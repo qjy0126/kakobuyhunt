@@ -5,7 +5,6 @@ Allow: /
 Disallow: /*?q=
 Disallow: /*?page=
 Disallow: /*?sort=
-Disallow: /*?brand=
 
 User-agent: GPTBot
 Allow: /

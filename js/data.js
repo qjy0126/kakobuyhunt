@@ -33,11 +33,15 @@ KF.itemSlug = (p) => {
  return (base ? base + "-" : "") + id;
 };
 
-KF.itemPath = (p) => "item.html?id=" + encodeURIComponent(p.id);
-KF.catPath = (slug) => (slug ? "shop.html?cat=" + encodeURIComponent(slug) : "shop.html");
+KF.itemPath = (p) => {
+  const map = typeof window !== "undefined" && window.KF_SLUGS;
+  const mapped = map && map[String(p.id)];
+  return "/item/" + (mapped || KF.itemSlug(p)) + "/";
+};
+KF.catPath = (slug) => (slug ? "/" + encodeURIComponent(slug) + "/" : "/finds/");
 KF.brandSlug = (name) => KF.slugify(name);
-KF.brandPath = (name) => "shop.html?brand=" + encodeURIComponent(KF.brandSlug(name));
-KF.findsPath = () => "shop.html";
+KF.brandPath = (name) => "/brands/" + KF.brandSlug(name) + "/";
+KF.findsPath = () => "/finds/";
 
 /* Many spreadsheet rows tag collection as "Find" while the brand only appears in the title. */
 KF.brandAliases = {
