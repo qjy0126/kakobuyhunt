@@ -218,16 +218,6 @@
  const interestHead = $("#interest-head");
  if (interestHead) interestHead.hidden = interest.length === 0;
  KF.track("view_item", { currency: "USD", value: Number(item.price) || 0, items: KF.gaItem(item) });
- $("#buy-link").addEventListener("click", () => {
- KF.track("buy_kakobuy", {
- agent: "kakobuy",
- item_id: String(item.id),
- item_name: item.title || "",
- currency: "USD",
- value: Number(item.price) || 0,
- items: KF.gaItem(item),
- });
- });
  }
 
  function ensureItemPromo() {

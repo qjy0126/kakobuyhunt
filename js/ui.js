@@ -160,9 +160,17 @@
  } else if (e.target.id === "overlay") {
  closeAll();
  }
- const buy = e.target.closest("[data-buy]");
- if (buy) {
- const item = KF.products.find((p) => p.id === buy.dataset.buy);
+ const kakobuy = e.target.closest("a[href*='kakobuy.com']");
+ if (kakobuy) {
+ const href = kakobuy.href || "";
+ if (/\/register/i.test(href)) {
+ KF.track("signup_kakobuy", { link_url: href, page_path: location.pathname });
+ return;
+ }
+ const id = document.body.dataset.itemId || kakobuy.dataset.buy || "";
+ const item = id
+ ? (KF.products || []).find((p) => String(p.id) === String(id))
+ : null;
  if (item) {
  KF.track("buy_kakobuy", {
  agent: "kakobuy",
@@ -171,6 +179,14 @@
  currency: "USD",
  value: Number(item.price) || 0,
  items: KF.gaItem(item),
+ link_url: href,
+ page_path: location.pathname,
+ });
+ } else {
+ KF.track("buy_kakobuy", {
+ agent: "kakobuy",
+ link_url: href,
+ page_path: location.pathname,
  });
  }
  }
